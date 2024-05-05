@@ -66,19 +66,20 @@ public class UsuariosRegistrados{
 	        	
 	        	if (role == "Administrador") {
 	        		Administrador admin = (Administrador) usuariosEnPrograma.get(i);
-	        		List<Oferta> ofertas = admin.getOfertas();
-	        		writer.println( "tipo:" + role + ":" + nombre + ":" + id + ":" + username + ":" + password+":"+ofertas);
+	        		
+	        		writer.println( "tipo:" + role + ":" + nombre + ":" + id + ":" + username + ":" + password);
+	        		
 	        	}
 	        	else if (role == "Operador") {
 	        		Operador operador = (Operador) usuariosEnPrograma.get(i);
-	        		Map<String, Double> ofertasRegistradas  = operador.getOfertasRegistradas();
-	        		writer.println( "tipo:" + role + ":" + nombre + ":" + id + ":" + username + ":" + password+":"+ofertasRegistradas);
+	        		
+	        		writer.println( "tipo:" + role + ":" + nombre + ":" + id + ":" + username + ":" + password);
 	      
 	        	}
 	        	else if (role == "Cajero") {
 	        		Cajero cajero = (Cajero) usuariosEnPrograma.get(i);
-	        		List<String> transacciones = cajero.getTransacciones();
-	        		writer.println( "tipo:" + role + ":" + nombre + ":" + id + ":" + username + ":" + password+":"+transacciones);
+	        		
+	        		writer.println( "tipo:" + role + ":" + nombre + ":" + id + ":" + username + ":" + password);
 	        	}
 	        	
 	        	
@@ -101,7 +102,7 @@ public class UsuariosRegistrados{
 	        	boolean estaVerificado = comprador.isEstaVerificado();
 	        	
 	        	
-	            writer.println(idUsuario+":"+nombre+":"+username+":"+password+":"+informacionContacto+":"+piezas+":"+piezasFavoritas+":"+dinero+":"+estaVerificado)
+	            writer.println("Comprador"+idUsuario+":"+nombre+":"+username+":"+password+":"+informacionContacto+":"+piezas+":"+piezasFavoritas+":"+dinero+":"+estaVerificado)
 	            ;
 	        }
 
@@ -112,9 +113,8 @@ public class UsuariosRegistrados{
 	   
 	    public static UsuariosRegistrados cargarEstado( File archivo ) throws FileNotFoundException, IOException, NumberFormatException
 	    {
-	        Map<String, TipoGasolina> tipos = new HashMap<String, TipoGasolina>( );
-	        Map<String, Empleado> empleados = new HashMap<String, Empleado>( );
-	        List<Surtidor> surtidores = new LinkedList<Surtidor>( );
+	    	List<Empleado> usuariosEnPrograma = new LinkedList<>();
+	    	List<CompradorPropietario> compradoresEnPrograma = new LinkedList<>();
 
 	        BufferedReader br = new BufferedReader( new FileReader( archivo ) );
 	        String line = br.readLine( );
@@ -123,38 +123,44 @@ public class UsuariosRegistrados{
 	            String[] partes = line.split( ":" );
 	            if( partes[ 0 ].equals( "tipo" ) )
 	            {
-	                String nombre = partes[ 1 ];
-	                int precio = Integer.parseInt( partes[ 2 ] );
-	                double cantidad = Double.parseDouble( partes[ 3 ] );
-	                tipos.put( nombre, new TipoGasolina( nombre, precio, cantidad ) );
+		        	
+	                String role = partes[ 1 ];
+	                String nombre = partes[ 2 ];
+	                String username = partes[ 3 ];
+	                String password = partes[ 4 ];
+	                String id = partes[ 5 ];
+	                if (role == "Operador") {
+	        
+		                Administrador admin = new Administrador(role,nombre,username, password, id);
+		                usuariosEnPrograma.add(admin);
+	                	
+		        	}
+		        	else if (role == "Operador") {
+		        		Operador opera = new Operador(role,nombre,username, password, id);
+		        		usuariosEnPrograma.add(opera);
+		        		
+		        	}
+		        	else if (role == "Cajero") {
+		        		Cajero cajero = new Cajero(role, nombre, username, password,id);
+		        		usuariosEnPrograma.add(cajero);
+		        	}
 	            }
-	            else if( partes[ 0 ].equals( "surtidor" ) )
+	            else if( partes[ 0 ].equals( "Comprador" ) )
 	            {
-	                String nombreEmpleado = partes[ 1 ];
-	                if( !empleados.containsKey( nombreEmpleado ) )
-	                {
-	                    empleados.put( nombreEmpleado, new Empleado( nombreEmpleado ) );
-	                }
-	                Empleado empleadoAsignado = empleados.get( nombreEmpleado );
-	                Surtidor nuevoSurtidor = new Surtidor( tipos, empleadoAsignado );
-	                for( int pos = 2; pos < partes.length; pos += 2 )
-	                {
-	                    String tipo = partes[ pos ];
-	                    double cantidad = Double.parseDouble( partes[ pos + 1 ] );
-	                    nuevoSurtidor.cambiarGalonesVendidos( tipo, cantidad );
-	                }
-	                surtidores.add( nuevoSurtidor );
+	            	String idUsuario = partes[1];
+		        	String nombre = partes[2];
+		        	String username = partes[3];
+		            String password = partes[4];
+		        	String informacionContacto = partes[5];
+		        	String piezas = partes[6];
+		        	String piezasFavoritas = partes[7];
+		        	String dinero = partes[8];
+		        	String estaVerificado = partes[9];
+	                
 	            }
 	            else if( partes[ 0 ].equals( "empleado" ) )
 	            {
-	                String nombreEmpleado = partes[ 1 ];
-	                int dinero = Integer.parseInt( partes[ 2 ] );
-	                if( !empleados.containsKey( nombreEmpleado ) )
-	                {
-	                    empleados.put( nombreEmpleado, new Empleado( nombreEmpleado ) );
-	                }
-	                Empleado nuevoEmpleado = empleados.get( nombreEmpleado );
-	                nuevoEmpleado.agregarDinero( dinero );
+	                
 	            }
 
 	            line = br.readLine( );

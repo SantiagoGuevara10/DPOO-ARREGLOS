@@ -9,15 +9,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Cajero extends Empleado {
-    private List<String> transacciones = new ArrayList<>();
 
     public Cajero(String idEmpleado, String nombre, String username, String passwordHash, String role) {
         super(idEmpleado, nombre, username, passwordHash, role);
     }
 
-    public List<String>  getTransacciones(){
-    	return transacciones;
-    }
+ 
     
     public void procesarPago(CompradorPropietario comprador, CompradorPropietario vendedor, double monto, Pieza pieza) {
         
@@ -29,21 +26,10 @@ public class Cajero extends Empleado {
            
             pieza.setPropietario(comprador);
      
-            transacciones.add("Pago de $" + monto + " realizado por " + comprador.getNombre() + " para la pieza " + pieza.getTitulo());
-            
         }
     }
 
  
-    public void emitirRecibos() {
-        transacciones.forEach(transaccion -> {
-           
-            emitirRecibo(transaccion);
-        });
-     
-        transacciones.clear();
-    }
-
    
     private void emitirRecibo(String transaccion) {
         try (FileWriter writer = new FileWriter("Recibo_" + transaccion.hashCode() + ".txt")) {

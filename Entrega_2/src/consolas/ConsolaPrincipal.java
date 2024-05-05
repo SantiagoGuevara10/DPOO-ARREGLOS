@@ -1,6 +1,10 @@
 package consolas;
 
+import java.util.LinkedList;
+import java.util.List;
+
 import galeria.inventarios.InventarioGeneral;
+import galeria.usuarios.Empleado;
 
 /**
  * En esta clase se encuentra el método main de la aplicación.
@@ -54,6 +58,10 @@ public class ConsolaPrincipal extends ConsolaBasica{
 
 	public static void main( String[] args )
     {
+		List<String> bola = new LinkedList<>();
+		bola.add("popo");
+		bola.add("mor");
+		System.out.println(bola);
         ConsolaPrincipal c = new ConsolaPrincipal( );
         c.mostrarMenuPrincipal( );
     }
