@@ -153,10 +153,19 @@ public class UsuariosRegistrados{
 		            String password = partes[4];
 		        	String informacionContacto = partes[5];
 		        	String piezas = partes[6];
+		        	String[] piezasl = piezas.split( "," );
+		        	for(int i=0; i<piezasl.length;i++) {
+		        		Pieza pieza = 
+		        		
+		        		
+		        	}
+		        	
 		        	String piezasFavoritas = partes[7];
 		        	String dinero = partes[8];
 		        	String estaVerificado = partes[9];
-	                
+		        	
+		        	
+		    		
 	            }
 	            else if( partes[ 0 ].equals( "empleado" ) )
 	            {

@@ -58,10 +58,7 @@ public class ConsolaPrincipal extends ConsolaBasica{
 
 	public static void main( String[] args )
     {
-		List<String> bola = new LinkedList<>();
-		bola.add("popo");
-		bola.add("mor");
-		System.out.println(bola);
+		
         ConsolaPrincipal c = new ConsolaPrincipal( );
         c.mostrarMenuPrincipal( );
     }
