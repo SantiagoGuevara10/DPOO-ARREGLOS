@@ -15,6 +15,9 @@ public class Cajero extends Empleado {
         super(idEmpleado, nombre, username, passwordHash, role);
     }
 
+    public List<String>  getTransacciones(){
+    	return transacciones;
+    }
     
     public void procesarPago(CompradorPropietario comprador, CompradorPropietario vendedor, double monto, Pieza pieza) {
         
@@ -49,4 +52,6 @@ public class Cajero extends Empleado {
             
         }
     }
+    
+    
 }

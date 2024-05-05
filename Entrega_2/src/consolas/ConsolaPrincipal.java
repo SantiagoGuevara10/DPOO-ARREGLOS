@@ -33,17 +33,10 @@ public class ConsolaPrincipal extends ConsolaBasica{
         }
         else if( opcionSeleccionada == 3 )
         {
-            
-        }
+            crearUsuario();
+        }  
+        
         else if( opcionSeleccionada == 4 )
-        {
-           
-        }
-        else if( opcionSeleccionada == 5 )
-        {
-            
-        }
-        else if( opcionSeleccionada == 6 )
         {
             System.out.println( "Saliendo ..." );
             System.exit( 0 );
@@ -52,9 +45,19 @@ public class ConsolaPrincipal extends ConsolaBasica{
     }
     
     
-    public static void main( String[] args )
+    private void crearUsuario() {
+		ConsolaCrearUsuario creacionuser = new ConsolaCrearUsuario();
+		Object usuarionuevo = creacionuser.mostrarMenu();
+		
+	}
+
+
+	public static void main( String[] args )
     {
         ConsolaPrincipal c = new ConsolaPrincipal( );
         c.mostrarMenuPrincipal( );
     }
+	
+	
+	
 }
