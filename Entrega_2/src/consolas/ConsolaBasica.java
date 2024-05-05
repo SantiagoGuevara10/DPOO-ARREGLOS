@@ -5,10 +5,15 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 
 import galeria.inventarios.InventarioGeneral;
 import galeria.pieza.Pieza;
+import galeria.usuarios.CompradorPropietario;
+import galeria.usuarios.Empleado;
+import galeria.usuarios.UsuariosRegistrados;
 
 /**
  * Esta es una clase abstracta que implementa métodos útiles para todas las consolas de la aplicación.
@@ -261,10 +266,49 @@ public abstract class ConsolaBasica {
         System.out.println(	"\n");
         
         double dinero = inventarioTotal.getInventarioDinero();
-        System.out.println( "La galería tiene actualmente " +dinero+ "pesos");
         
+        System.out.println("La organización tiene "+dinero+" en ganancias");
+ 
         
+    }
+    
+    private void mostrarInformacionBasicaUsuarios( UsuariosRegistrados usuarios)
+    {
+        System.out.println( "\n******************" );
+        System.out.println( "ESTADO ACTUAL" );
+        List<CompradorPropietario> compradores = usuarios.getCompradoresEnPrograma();
+        List<Empleado>empleados = usuarios.getUsuariosEnPrograma();
+        List<String>admin = new LinkedList<String>();
+        List<String>operador = new LinkedList<String>();
+        List<String>cajero = new LinkedList<String>();
+        List<String>comprador = new LinkedList<String>();
         
+        for(int i =0; i< empleados.size(); i++) {
+        	String role = empleados.get(i).getRole();
+        	if (role == "Administrador") {
+        		admin.add(empleados.get(i).getNombre());
+        	}
+        	else if (role == "Operador") {
+        		operador.add(empleados.get(i).getNombre());
+      
+        	}
+        	else if (role == "Cajero") {
+        		cajero.add(empleados.get(i).getNombre());
+        	}
+        }
         
+        for(int i =0; i< compradores.size(); i++) {
+        	String nombre = compradores.get(i).getNombre();
+        	comprador.add(nombre);
+        }
+        
+        System.out.println( "La galería tiene actualmente los siguientes administradores " );
+        System.out.println(admin);
+        System.out.println( "La galería tiene actualmente los siguientes operadores \n" );
+        System.out.println(operador);
+        System.out.println( "La galería tiene actualmente los siguientes cajeros \n" );
+        System.out.println(cajero);
+        System.out.println( "La galería tiene actualmente los siguientes compradores y vendedores \n" );
+        System.out.println(comprador);
     }
 }
